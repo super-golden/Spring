@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!--import 标签-->
+	<!--<import resource="springApplication-xml2.xml"/>-->
+	<bean id="person" class="com.sr.ioc.ioc2.bean.Person" scope="singleton" >
+		<!--<meta key="testStr" value="testStr"/>-->
+		<!--<property name="name">-->
+			<!--<value>毛豆</value>-->
+		<!--</property>-->
+		<!--<property name="hobbies">-->
+			<!--<list>-->
+				<!--<value>吃奶</value>-->
+				<!--<value>睡觉</value>-->
+			<!--</list>-->
+		<!--</property>-->
+		<!--<property name="cat">-->
+			<!--<ref bean="cat"/>-->
+		<!--</property>-->
+		<constructor-arg name="name" index="0">
+			<value>毛豆</value>
+		</constructor-arg>
+		<constructor-arg name="hobbies" index="1">
+			<list>
+				<value>吃奶</value>
+				<value>拉尿</value>
+			</list>
+		</constructor-arg>
+	</bean>
+	<alias name="person" alias="person2"/>
+	<!--<bean class="com.sr.ioc.ioc2.bean.Cat" id="cat">-->
+		<!--<property name="person">-->
+			<!--<ref bean="person"/>-->
+		<!--</property>-->
+	<!--</bean>-->
+
+	<!--<bean class="com.sr.ioc.ioc3.factoryBean.CarFactoryBean" id="car" >-->
+		<!--<property name="carInfo">-->
+			<!--<value>超级跑车,400,200000000</value>-->
+		<!--</property>-->
+	<!--</bean>-->
+	<!--嵌入式beans标签的解析-->
+	<!--<beans>-->
+		<!--<bean id="getBeanTest" class="com.sr.ioc.ioc3.lookupmethod.GetBeanTest">-->
+			<!--<lookup-method name="getBean" bean="teacher"/>-->
+		<!--</bean>-->
+		<!--<bean id="teacher" class="com.sr.ioc.ioc3.lookupmethod.Teacher"/>-->
+	<!--</beans>-->
+
+
+</beans>

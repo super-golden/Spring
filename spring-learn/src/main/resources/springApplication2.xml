@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="user" class="com.sr.ioc.ioc2.bean.UserManger">
+		<property name="dataValue">
+			<value>2013-03-15</value>
+		</property>
+		<property name="message">
+			<value>${bean.message}</value>
+		</property>
+	</bean>
+
+	<!--使用自定义的属性编辑器-->
+	<!--<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">-->
+		<!--<property name="customEditors">-->
+			<!--<map>-->
+				<!--<entry key="java.util.Date" >-->
+					<!--<bean  class="com.sr.ioc.ioc2.editor.DatePropertyEditor">-->
+						<!--&lt;!&ndash;<property name="format" value="yyyy-MM-dd"></property>&ndash;&gt;-->
+					<!--</bean>-->
+				<!--</entry>-->
+			<!--</map>-->
+		<!--</property>-->
+	<!--</bean>-->
+
+	<!--注册spring 自带的属性编辑器CustomDateEditor-->
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="propertyEditorRegistrars">
+			<list>
+				<bean class="com.sr.ioc.ioc2.editor.DatePropertyEditorRegistrar"></bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="configurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>config/bean.properties</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

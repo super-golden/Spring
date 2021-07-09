@@ -1,0 +1,13 @@
+<bean id="aServiceImpl" class="com.xxx.plus.aop.demo.AServiceImpl"/>
+<bean id="myBeforAdvice" class="com.xxx.plus.aop.demo.MyBeforeAdvice"/>
+<bean id="aServiceImplProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+<property name="interfaces" value="com.xxx.plus.aop.demo.AService"/>
+<property name="target">
+	<ref bean="aServiceImpl"/>
+</property>
+<property name="interceptorNames">
+	<list>
+		<value>myBeforAdvice</value>
+	</list>
+</property>
+</bean>

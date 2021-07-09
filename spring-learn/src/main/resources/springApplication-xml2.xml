@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+
+
+	<bean id="testChangeMethod" class="com.sr.ioc.ioc3.replacedmethod.TestChangeMethod">
+		<replaced-method name="changeMe" replacer="replacer"/>
+	</bean>
+	<bean id="replacer" class="com.sr.ioc.ioc3.replacedmethod.TestMethodReplacer"/>
+
+	<!--默认的情况下是按照参数的顺序注入，当指定index索引后就可以改变注入参数的顺序-->
+	<bean class="com.sr.ioc.ioc3.constructorarg.HelloBean" id="helloBean">
+		<constructor-arg index="1">
+			<value>郝佳</value>
+		</constructor-arg>
+		<constructor-arg index="0">
+			<value>你好</value>
+		</constructor-arg>
+	</bean>
+
+</beans>

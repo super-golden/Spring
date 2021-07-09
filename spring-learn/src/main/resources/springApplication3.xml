@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="simpleBean" class="com.sr.ioc.ioc2.bean.SimpleBean">
+		<property name="connectiongString" value="bollocks"/>
+		<property name="password" value="imaginecup"/>
+		<property name="username" value="Microsoft"/>
+	</bean>
+
+	<bean id="bfpp" class="com.sr.ioc.ioc2.processores.ObscenityRemoveingBeanFactoryPostProcessor">
+		<property name="obscenities">
+			<set>
+				<value>bollocks</value>
+				<value>winky</value>
+				<value>bum</value>
+				<value>Microsoft</value>
+			</set>
+		</property>
+
+	</bean>
+</beans>

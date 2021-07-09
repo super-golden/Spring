@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!--这个bean的ID只能为conversionService-->
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="com.sr.ioc.ioc2.converter.String2DateConverter"/>
+			</set>
+		</property>
+	</bean>
+
+
+	<bean id="user" class="com.sr.ioc.ioc2.bean.UserManger">
+		<property name="dataValue">
+			<value>2013-03-15</value>
+		</property>
+	</bean>
+
+	<bean class="com.sr.ioc.ioc2.bean.MQLifecycle" id="mqLifecycle"/>
+</beans>
