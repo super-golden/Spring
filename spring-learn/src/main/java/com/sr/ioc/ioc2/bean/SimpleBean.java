@@ -6,6 +6,10 @@ public class SimpleBean {
 	private String password;
 	private String username;
 
+	public SimpleBean() {
+		System.out.println("invoke SimpleBean() !!");
+	}
+
 	public String getConnectiongString() {
 		return connectiongString;
 	}

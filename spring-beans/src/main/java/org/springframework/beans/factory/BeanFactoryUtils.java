@@ -78,6 +78,7 @@ public abstract class BeanFactoryUtils {
 	 * @param name the name of the bean
 	 * @return the transformed name
 	 * @see BeanFactory#FACTORY_BEAN_PREFIX
+	 * 如果beanName非&开头，直接返回，否则处理掉&返回
 	 */
 	public static String transformedBeanName(String name) {
 		Assert.notNull(name, "'name' must not be null");
@@ -92,7 +93,6 @@ public abstract class BeanFactoryUtils {
 			return beanName;
 		});
 	}
-
 	/**
 	 * Return whether the given name is a bean name which has been generated
 	 * by the default naming strategy (containing a "#..." part).

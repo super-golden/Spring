@@ -10,15 +10,14 @@
 		<property name="username" value="Microsoft"/>
 	</bean>
 
-	<bean id="bfpp" class="com.sr.ioc.ioc2.processores.ObscenityRemoveingBeanFactoryPostProcessor">
-		<property name="obscenities">
-			<set>
-				<value>bollocks</value>
-				<value>winky</value>
-				<value>bum</value>
-				<value>Microsoft</value>
-			</set>
-		</property>
-
-	</bean>
+	<!--<bean id="bfpp" class="com.sr.ioc.ioc2.processores.ObscenityRemoveingBeanFactoryPostProcessor">-->
+		<!--<property name="obscenities">-->
+			<!--<set>-->
+				<!--<value>bollocks</value>-->
+				<!--<value>winky</value>-->
+				<!--<value>bum</value>-->
+				<!--<value>Microsoft</value>-->
+			<!--</set>-->
+		<!--</property>-->
+	<!--</bean>-->
 </beans>
