@@ -17,12 +17,14 @@ public class AnnotationConfigACTest {
 		/**
 		 * 初始化Spring容器
 		 */
+//		AnnotationConfigApplicationContext acc=
+//				new AnnotationConfigApplicationContext();
+//		//false:禁止循环依赖
+//		acc.setAllowCircularReferences(true);
+//		acc.register(AppConfig.class);
+//		acc.refresh();
 		AnnotationConfigApplicationContext acc=
-				new AnnotationConfigApplicationContext();
-		//false:禁止循环依赖
-		acc.setAllowCircularReferences(true);
-		acc.register(AppConfig.class);
-		acc.refresh();
+				new AnnotationConfigApplicationContext(AppConfig.class);
 		//IndexService bean = acc.getBean(IndexService.class);
 		//System.out.println(bean);
 		//bean.getUserService();
