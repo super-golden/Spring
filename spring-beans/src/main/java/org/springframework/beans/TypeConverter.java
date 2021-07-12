@@ -21,7 +21,10 @@ import java.lang.reflect.Field;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.lang.Nullable;
-
+/**
+ * 定义类型转换方法的接口。通常（但不一定）与PropertyEditorRegistry接口一起实现
+ * 通常接口TypeConverter的实现是基于非线程安全的PropertyEditors类，因此也不是线程安全的
+ */
 /**
  * Interface that defines type conversion methods. Typically (but not necessarily)
  * implemented in conjunction with the {@link PropertyEditorRegistry} interface.
@@ -35,6 +38,7 @@ import org.springframework.lang.Nullable;
  * @see SimpleTypeConverter
  * @see BeanWrapperImpl
  */
+
 public interface TypeConverter {
 
 	/**
@@ -52,6 +56,10 @@ public interface TypeConverter {
 	 * @see org.springframework.core.convert.converter.Converter
 	 */
 	@Nullable
+	/**
+	 * 将参数中的value转换成requiredType类型
+	 * 从String到任何类型的转换通常使用PropertyEditor类的setAsText方法或ConversionService中的Spring Converter
+	 */
 	<T> T convertIfNecessary(@Nullable Object value, @Nullable Class<T> requiredType) throws TypeMismatchException;
 
 	/**
@@ -71,6 +79,9 @@ public interface TypeConverter {
 	 * @see org.springframework.core.convert.converter.Converter
 	 */
 	@Nullable
+	/**
+	 * 意义同上，增加了作为转换目标的方法参数，主要用于分析泛型类型，可能是null
+	 */
 	<T> T convertIfNecessary(@Nullable Object value, @Nullable Class<T> requiredType,
 			@Nullable MethodParameter methodParam) throws TypeMismatchException;
 
@@ -91,6 +102,9 @@ public interface TypeConverter {
 	 * @see org.springframework.core.convert.converter.Converter
 	 */
 	@Nullable
+	/**
+	 * 意义同上，增加了转换目标的反射field
+	 */
 	<T> T convertIfNecessary(@Nullable Object value, @Nullable Class<T> requiredType, @Nullable Field field)
 			throws TypeMismatchException;
 

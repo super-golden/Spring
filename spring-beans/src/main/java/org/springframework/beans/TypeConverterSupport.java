@@ -28,13 +28,14 @@ import org.springframework.util.Assert;
 /**
  * Base implementation of the {@link TypeConverter} interface, using a package-private delegate.
  * Mainly serves as base class for {@link BeanWrapperImpl}.
- *
+ *TypeConverter的基本实现类，同时也是BeanWrapperImpl类的依赖类。
  * @author Juergen Hoeller
  * @since 3.2
  * @see SimpleTypeConverter
  */
-public abstract class TypeConverterSupport extends PropertyEditorRegistrySupport implements TypeConverter {
 
+public abstract class TypeConverterSupport extends PropertyEditorRegistrySupport implements TypeConverter {
+	// 委托给TypeConverterDelegate来转换
 	@Nullable
 	TypeConverterDelegate typeConverterDelegate;
 
