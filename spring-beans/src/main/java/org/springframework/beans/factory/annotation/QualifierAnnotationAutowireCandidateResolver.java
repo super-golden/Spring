@@ -58,7 +58,7 @@ import org.springframework.util.StringUtils;
  * @see Value
  */
 public class QualifierAnnotationAutowireCandidateResolver extends GenericTypeAwareAutowireCandidateResolver {
-
+	// 支持的注解类型，默认支持@Qualifier和JSR-330的javax.inject.Qualifier注解
 	private final Set<Class<? extends Annotation>> qualifierTypes = new LinkedHashSet<>(2);
 
 	private Class<? extends Annotation> valueAnnotationType = Value.class;
@@ -69,6 +69,8 @@ public class QualifierAnnotationAutowireCandidateResolver extends GenericTypeAwa
 	 * for Spring's standard {@link Qualifier} annotation.
 	 * <p>Also supports JSR-330's {@link javax.inject.Qualifier} annotation, if available.
 	 */
+	// 你可可以通过构造函数，增加你自定义的注解的支持~~~
+	// 注意都是add  不是set
 	@SuppressWarnings("unchecked")
 	public QualifierAnnotationAutowireCandidateResolver() {
 		this.qualifierTypes.add(Qualifier.class);
@@ -112,6 +114,7 @@ public class QualifierAnnotationAutowireCandidateResolver extends GenericTypeAwa
 	 * as a qualifier for direct use and also as a meta annotation.
 	 * @param qualifierType the annotation type to register
 	 */
+	// 后面讲的CustomAutowireConfigurer 它会调用这个方法来自定义注解
 	public void addQualifierType(Class<? extends Annotation> qualifierType) {
 		this.qualifierTypes.add(qualifierType);
 	}
@@ -125,6 +128,7 @@ public class QualifierAnnotationAutowireCandidateResolver extends GenericTypeAwa
 	 * (non-Spring-specific) annotation type to indicate a default value
 	 * expression for a specific argument.
 	 */
+	//@Value注解类型Spring也是允许我们改成自己的类型的
 	public void setValueAnnotationType(Class<? extends Annotation> valueAnnotationType) {
 		this.valueAnnotationType = valueAnnotationType;
 	}
@@ -142,6 +146,9 @@ public class QualifierAnnotationAutowireCandidateResolver extends GenericTypeAwa
 	 * attribute does not match.
 	 * @see Qualifier
 	 */
+	// 这个实现，比父类的实现就更加的严格了，区分度也就越高了~~~
+	// checkQualifiers方法是本类的核心，灵魂
+	// 它有两个方法getQualifiedElementAnnotation和getFactoryMethodAnnotation表名了它支持filed和方法
 	@Override
 	public boolean isAutowireCandidate(BeanDefinitionHolder bdHolder, DependencyDescriptor descriptor) {
 		boolean match = super.isAutowireCandidate(bdHolder, descriptor);

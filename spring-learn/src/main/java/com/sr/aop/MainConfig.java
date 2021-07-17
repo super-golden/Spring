@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Configuration
 @ComponentScan("com.sr.aop")
-@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy(proxyTargetClass = true,exposeProxy = false)
 public class MainConfig {
 	@Bean
 	public Calculate calculate() {

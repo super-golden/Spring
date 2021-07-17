@@ -958,6 +958,11 @@ public abstract class ClassUtils {
 		return shortName;
 	}
 
+	public static void main(String[] args) {
+		String shortName = getShortName("java.lang.String");
+		System.out.println(shortName);
+	}
+
 	/**
 	 * Get the class name without the qualified package name.
 	 * @param clazz the class to get the short name for

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Configuration
 @ComponentScan("com.sr.ioc.ioc1")
 //AOP支持
-@EnableAspectJAutoProxy
+//@EnableAspectJAutoProxy
 public class AppConfig {
 
 

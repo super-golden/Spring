@@ -650,7 +650,7 @@ public class ProxyFactoryBean extends ProxyCreatorSupport
 	//---------------------------------------------------------------------
 	// Serialization support
 	//---------------------------------------------------------------------
-
+    //序列化支持
 	private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
 		// Rely on default serialization; just initialize state after deserialization.
 		ois.defaultReadObject();
