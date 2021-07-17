@@ -58,6 +58,9 @@ import org.springframework.util.CollectionUtils;
  * @author Juergen Hoeller
  * @see org.springframework.aop.framework.AopProxy
  */
+//aop代理配置管理的基类。
+//自身不是aop代理，但其子类是能够直接获取aop代理实例的常规工厂。
+//该类为子类管理创建Advices和Advisors利用便利，但它实际上没有实现代理的创建方法，由子类各自提供。
 public class AdvisedSupport extends ProxyConfig implements Advised {
 
 	/** use serialVersionUID from Spring 2.0 for interoperability. */

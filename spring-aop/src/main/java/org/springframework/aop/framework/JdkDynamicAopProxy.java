@@ -62,6 +62,7 @@ import org.springframework.util.ClassUtils;
  * @see AdvisedSupport
  * @see ProxyFactory
  */
+//使用java.lang.reflect.Proxy java JDK，基于接口(不支持类)创建Aop代理 备注：InvocationHandler是java.lang.reflect提供的接口
 final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializable {
 
 	/** use serialVersionUID from Spring 1.2 for interoperability. */

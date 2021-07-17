@@ -141,6 +141,7 @@ public class ProxyFactoryBean extends ProxyCreatorSupport
 
 	private boolean freezeProxy = false;
 
+	//代理类加载器
 	@Nullable
 	private transient ClassLoader proxyClassLoader = ClassUtils.getDefaultClassLoader();
 
@@ -154,6 +155,7 @@ public class ProxyFactoryBean extends ProxyCreatorSupport
 	private boolean advisorChainInitialized = false;
 
 	/** If this is a singleton, the cached singleton proxy instance. */
+	//单例代理对象
 	@Nullable
 	private Object singletonInstance;
 
@@ -351,6 +353,7 @@ public class ProxyFactoryBean extends ProxyCreatorSupport
 	 *如果它还没有被创造出来，那就是懒惰地创造它。
 	 * @return the shared singleton proxy
 	 */
+	//这个方法是ProxyFactoryBean 生成AopProxy代理对象的调用入口。
 	private synchronized Object getSingletonInstance() {
 		if (this.singletonInstance == null) {
 			this.targetSource = freshTargetSource();
@@ -497,7 +500,7 @@ public class ProxyFactoryBean extends ProxyCreatorSupport
 				else {
 					// If we get here, we need to add a named interceptor.
 					// We must check if it's a singleton or prototype.
-					/**如果程序在这里被调用，那么需要加入 名字为这个的拦截器 advice */
+					/**如果程序在这里被调用，那么需要加入 名字为这个的拦截器 advice ，并且需要检查这个bean是singleton 还是 prototype*/
 					Object advice;
 					if (this.singleton || this.beanFactory.isSingleton(name)) {
 						// Add the real Advisor/Advice to the chain.

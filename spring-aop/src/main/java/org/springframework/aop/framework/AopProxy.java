@@ -29,6 +29,7 @@ import org.springframework.lang.Nullable;
  * @author Juergen Hoeller
  * @see DefaultAopProxyFactory
  */
+//用来实际生成proxy对象的接口,通过DefaultAopProxyFactory类型暴露出来
 public interface AopProxy {
 
 	/**
@@ -38,6 +39,7 @@ public interface AopProxy {
 	 * @return the new proxy object (never {@code null})
 	 * @see Thread#getContextClassLoader()
 	 */
+	//获取代理对象
 	Object getProxy();
 
 	/**

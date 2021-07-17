@@ -32,6 +32,7 @@ import org.springframework.util.ConcurrentReferenceHashMap;
  * @see #isWorthTrying()
  * @see #newInstance(Class, boolean)
  */
+//objenesis是一个小型java类库用来实例化一个特定class的对象。
 public class SpringObjenesis implements Objenesis {
 
 	/**
@@ -102,6 +103,7 @@ public class SpringObjenesis implements Objenesis {
 		return getInstantiatorOf(clazz).newInstance();
 	}
 
+	//创建对象
 	public <T> T newInstance(Class<T> clazz) {
 		return getInstantiatorOf(clazz).newInstance();
 	}
