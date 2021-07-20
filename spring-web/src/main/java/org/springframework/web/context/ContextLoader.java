@@ -288,12 +288,15 @@ public class ContextLoader {
 					if (cwac.getParent() == null) {
 						// The context instance was injected without an explicit parent ->
 						// determine parent for root web application context, if any.
+						//这里载入根上下文的双亲上下文
 						ApplicationContext parent = loadParentContext(servletContext);
 						cwac.setParent(parent);
 					}
+					//初始化容器
 					configureAndRefreshWebApplicationContext(cwac, servletContext);
 				}
 			}
+			//将根上下文放到servletContext中的ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE属性中
 			servletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, this.context);
 
 			ClassLoader ccl = Thread.currentThread().getContextClassLoader();
@@ -331,11 +334,13 @@ public class ContextLoader {
 	 * @see ConfigurableWebApplicationContext
 	 */
 	protected WebApplicationContext createWebApplicationContext(ServletContext sc) {
+		//这里判断使用什么样的类在Web容器中作为IOC容器
 		Class<?> contextClass = determineContextClass(sc);
 		if (!ConfigurableWebApplicationContext.class.isAssignableFrom(contextClass)) {
 			throw new ApplicationContextException("Custom context class [" + contextClass.getName() +
 					"] is not of type [" + ConfigurableWebApplicationContext.class.getName() + "]");
 		}
+		//直接实例化需要产生的IOC容器
 		return (ConfigurableWebApplicationContext) BeanUtils.instantiateClass(contextClass);
 	}
 
@@ -348,7 +353,9 @@ public class ContextLoader {
 	 * @see org.springframework.web.context.support.XmlWebApplicationContext
 	 */
 	protected Class<?> determineContextClass(ServletContext servletContext) {
+		//这里读取在ServletContext中对CONTEXT_CLASS_PARAM 参数的配置
 		String contextClassName = servletContext.getInitParameter(CONTEXT_CLASS_PARAM);
+		//如果在ServletContext中配置了需要使用的CONTEXT_CLASS_PARAM，那就使用这个class，当然前提是这个class是可用的
 		if (contextClassName != null) {
 			try {
 				return ClassUtils.forName(contextClassName, ClassUtils.getDefaultClassLoader());
@@ -359,6 +366,7 @@ public class ContextLoader {
 			}
 		}
 		else {
+			//如果没有额外的配置，那么使用默认的ContextClass
 			contextClassName = defaultStrategies.getProperty(WebApplicationContext.class.getName());
 			try {
 				return ClassUtils.forName(contextClassName, ContextLoader.class.getClassLoader());
@@ -386,6 +394,7 @@ public class ContextLoader {
 		}
 
 		wac.setServletContext(sc);
+		//设置配置文件的位置参数
 		String configLocationParam = sc.getInitParameter(CONFIG_LOCATION_PARAM);
 		if (configLocationParam != null) {
 			wac.setConfigLocation(configLocationParam);
@@ -400,6 +409,7 @@ public class ContextLoader {
 		}
 
 		customizeContext(sc, wac);
+		//启动容器的初始化
 		wac.refresh();
 	}
 
