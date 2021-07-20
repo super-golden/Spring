@@ -12,7 +12,9 @@ public class TestBean {
 		this.testStr = testStr;
 	}
 
-	public void test(){
+	public String test() {
+
 		System.out.println("test");
+		return "com.sr.aop.aop2.TestBean.test";
 	}
 }

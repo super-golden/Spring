@@ -12,7 +12,7 @@ public class SpringAopTest {
 
 		AbcInterface proxyFactoryBean = (AbcInterface) context.getBean("proxyFactoryBean");
 		proxyFactoryBean.add();
-//		System.out.println("*************************");
+		System.out.println("*************************");
 //		TestTarget testTarget = context.getBean("testTarget", TestTarget.class);
 //		ProxyFactory proxyFactory = context.getBean("proxyFactory", ProxyFactory.class);
 //		proxyFactory.addAdvice(new TestAdvisor());
