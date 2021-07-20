@@ -62,12 +62,16 @@ import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 public class XmlWebApplicationContext extends AbstractRefreshableWebApplicationContext {
 
 	/** Default config location for the root context. */
+	//这里是设置默认BeanDefinition的地方，在/WEB-INF/applicationContext.xml文件中，
+	//如果不特别指定其他文件，IOC容器会从这里读取BeanDefinition来初始化IOC容器
 	public static final String DEFAULT_CONFIG_LOCATION = "/WEB-INF/applicationContext.xml";
 
 	/** Default prefix for building a config location for a namespace. */
+	//默认的配置文件在/WEB-INF/下
 	public static final String DEFAULT_CONFIG_LOCATION_PREFIX = "/WEB-INF/";
 
 	/** Default suffix for building a config location for a namespace. */
+	//默认的配置文件后缀
 	public static final String DEFAULT_CONFIG_LOCATION_SUFFIX = ".xml";
 
 
@@ -77,20 +81,26 @@ public class XmlWebApplicationContext extends AbstractRefreshableWebApplicationC
 	 * @see #initBeanDefinitionReader
 	 * @see #loadBeanDefinitions
 	 */
+	//又看到熟悉的loadBeanDefinitions，就像前面对IOC容器分析的一样，这个加载过程在容器refresh()时启动
 	@Override
 	protected void loadBeanDefinitions(DefaultListableBeanFactory beanFactory) throws BeansException, IOException {
 		// Create a new XmlBeanDefinitionReader for the given BeanFactory.
+		//对于XmlWebApplicationContext，当然是使用XmlBeanDefinitionReader来对BeanDefinition信息进行解析
 		XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
 
 		// Configure the bean definition reader with this context's
 		// resource loading environment.
+		//设置环境相关的信息
 		beanDefinitionReader.setEnvironment(getEnvironment());
+		//这里设置ResourceLoader，因为XmlWebApplicationContext是DefaultResource的子类，所以这里同样会使用DefaultResourceLoader来定位BeanDefinition
 		beanDefinitionReader.setResourceLoader(this);
 		beanDefinitionReader.setEntityResolver(new ResourceEntityResolver(this));
 
 		// Allow a subclass to provide custom initialization of the reader,
 		// then proceed with actually loading the bean definitions.
+		//允许子类为reader配置自定义的初始化过程
 		initBeanDefinitionReader(beanDefinitionReader);
+		//这里使用定义好的beanDefinitionReader来载入BeanDefinition
 		loadBeanDefinitions(beanDefinitionReader);
 	}
 

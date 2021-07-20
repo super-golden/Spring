@@ -52,24 +52,28 @@ public interface WebApplicationContext extends ApplicationContext {
 	 * @see org.springframework.web.context.support.WebApplicationContextUtils#getWebApplicationContext
 	 * @see org.springframework.web.context.support.WebApplicationContextUtils#getRequiredWebApplicationContext
 	 */
+	//这里定义的常量用于在ServletContext中存取跟上下文
 	String ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE = WebApplicationContext.class.getName() + ".ROOT";
 
 	/**
 	 * Scope identifier for request scope: "request".
 	 * Supported in addition to the standard scopes "singleton" and "prototype".
 	 */
+	//request作用域
 	String SCOPE_REQUEST = "request";
 
 	/**
 	 * Scope identifier for session scope: "session".
 	 * Supported in addition to the standard scopes "singleton" and "prototype".
 	 */
+	//session作用域
 	String SCOPE_SESSION = "session";
 
 	/**
 	 * Scope identifier for the global web application scope: "application".
 	 * Supported in addition to the standard scopes "singleton" and "prototype".
 	 */
+	//application作用域
 	String SCOPE_APPLICATION = "application";
 
 	/**
@@ -100,6 +104,7 @@ public interface WebApplicationContext extends ApplicationContext {
 	/**
 	 * Return the standard Servlet API ServletContext for this application.
 	 */
+	//对WebApplicationContext来说，需要得到web容器的ServletContext，可以通过这个方法
 	@Nullable
 	ServletContext getServletContext();
 
