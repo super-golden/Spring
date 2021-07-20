@@ -270,6 +270,10 @@ configure(allprojects) { project ->
 			dependency "org.glassfish.tyrus:tyrus-container-servlet:1.13.1"
             //引入servlet-api
 			dependency "javax.servlet:javax.servlet-api:4.0.1"
+            //导入内嵌的tomcat
+			dependency "org.apache.tomcat.embed:tomcat-embed-core:9.0.21"
+			dependency "org.apache.tomcat.embed:tomcat-embed-jasper:9.0.21"
+			dependency "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6"
 		}
 		generatedPomCustomization {
 			enabled = false
