@@ -1,2 +1,2 @@
 #com.tomcat.demo.servlet.HelloServletContainerInitializer
-com.sr.mvc.MyWebAppInitializer
+#com.sr.mvc.MyWebAppInitializer
