@@ -72,6 +72,14 @@ public class BeanNameViewResolver extends WebApplicationObjectSupport implements
 	}
 
 
+	/**
+	 * 直接到上下文中通过名称的对应关系把作为view对象的Bean取到
+	 * @param viewName name of the view to resolve
+	 * @param locale the Locale in which to resolve the view.
+	 * ViewResolvers that support internationalization should respect this.
+	 * @return
+	 * @throws BeansException
+	 */
 	@Override
 	@Nullable
 	public View resolveViewName(String viewName, Locale locale) throws BeansException {

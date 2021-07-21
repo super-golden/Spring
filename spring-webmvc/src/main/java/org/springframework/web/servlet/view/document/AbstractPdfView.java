@@ -75,17 +75,20 @@ public abstract class AbstractPdfView extends AbstractView {
 		ByteArrayOutputStream baos = createTemporaryOutputStream();
 
 		// Apply preferences and build metadata.
+		//创建iText的与PDF文件操作相关的对象
 		Document document = newDocument();
 		PdfWriter writer = newWriter(document, baos);
 		prepareWriter(model, writer, request);
 		buildPdfMetadata(model, document, request);
 
 		// Build PDF document.
+		//创建PDF文件的内容，具体创建过程交给子类的buildPdfDocument方法去完成
 		document.open();
 		buildPdfDocument(model, document, writer, request, response);
 		document.close();
 
 		// Flush to HTTP response.
+		//输出到HTTP response，将PDF视图呈现到客户端
 		writeToResponse(response, baos);
 	}
 
