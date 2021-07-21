@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/first")
@@ -18,5 +19,12 @@ public class FirstController {
 	public String firstTest() {
 		System.out.println(userService);
 		return "hello tomcat!!";
+	}
+	@RequestMapping("/index")
+	public ModelAndView firstIndex() {
+		System.out.println(userService);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("index");
+		return modelAndView;
 	}
 }
