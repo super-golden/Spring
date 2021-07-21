@@ -41,6 +41,7 @@ public class HandlerExecutionChain {
 
 	private static final Log logger = LogFactory.getLog(HandlerExecutionChain.class);
 
+	//这个对象实际上就是HTTP请求对应的Controller
 	private final Object handler;
 
 	@Nullable

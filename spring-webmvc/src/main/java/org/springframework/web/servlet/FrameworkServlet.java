@@ -214,6 +214,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	private boolean enableLoggingRequestDetails = false;
 
 	/** WebApplicationContext for this servlet. */
+	//DispatchServlet持有的IOC容器
 	@Nullable
 	private WebApplicationContext webApplicationContext;
 
