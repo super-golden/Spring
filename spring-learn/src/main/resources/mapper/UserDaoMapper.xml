@@ -7,4 +7,8 @@
         SELECT * from user where id = #{id}
     </select>
 
+	<insert id="insertUser" parameterType="String">
+       insert into user(name) values(#{userName})
+	</insert>
+
 </mapper>

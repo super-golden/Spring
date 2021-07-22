@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
 	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
-        https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
-	<!-- 注册相关后置处理器,扫描包路径下的注解配置 -->
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+	<tx:annotation-driven/>
+	<!-- 注册相关后置处理器,扫描包路径下的注解配置 -->
 	<context:component-scan base-package="com.sr.mvc">
 		<context:exclude-filter type="annotation"
 								expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
+
 	<!-- 1.配置数据源 -->
 	<!--<bean id="dataSource"-->
 	<!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
@@ -32,6 +43,12 @@
 	<!--<property name="dataSource" ref="dataSource"></property>-->
 	<!--</bean>-->
 
+	<!--事务注解驱动，标注@Transactional 具有事务性-->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<!--配置事务管理器-->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
 
 	<!--表明引用的参数配置文件是mysql-local.properties-->
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

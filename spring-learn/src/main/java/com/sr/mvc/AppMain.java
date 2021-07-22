@@ -2,6 +2,7 @@ package com.sr.mvc;
 
 import com.sr.mvc.dao.UserDao;
 import com.sr.mvc.pojo.User;
+import com.sr.mvc.service.UserService;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -43,14 +44,16 @@ public class AppMain {
 //				"usrname varchar(50)," +
 //				"balance double)");
 //		System.out.println("账户表创建成功!");
-		SqlSessionFactory sqlSessionFactory =  applicationContext.getBean("sqlSessionFactory", SqlSessionFactory.class);
-		System.out.println(sqlSessionFactory);
+//		SqlSessionFactory sqlSessionFactory =  applicationContext.getBean("sqlSessionFactory", SqlSessionFactory.class);
+//		System.out.println(sqlSessionFactory);
+//
+//		UserDao userDao = applicationContext.getBean("userMapper", UserDao.class);
+//		User userByID = userDao.getUserByID(1);
+//
+//		System.out.println(userByID.getName());
 
-		UserDao userDao = applicationContext.getBean("userMapper", UserDao.class);
-		User userByID = userDao.getUserByID(1);
-
-		System.out.println(userByID.getName());
-
+		UserService userService = applicationContext.getBean("userServiceImpl", UserService.class);
+		userService.insertUser("samson");
 
 
 	}
