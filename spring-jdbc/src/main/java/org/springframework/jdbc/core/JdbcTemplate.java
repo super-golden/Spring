@@ -362,17 +362,19 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 	//-------------------------------------------------------------------------
 	// Methods dealing with static SQL (java.sql.Statement)
 	//-------------------------------------------------------------------------
-
+    //这里是使用java.sql.Statement处理静态SQL语句的方法
 	@Override
 	@Nullable
 	public <T> T execute(StatementCallback<T> action) throws DataAccessException {
 		Assert.notNull(action, "Callback object must not be null");
-
+        //这里取得数据库的Connection，这个数据库的Connection已经在Spring的事务管理之下
 		Connection con = DataSourceUtils.getConnection(obtainDataSource());
 		Statement stmt = null;
 		try {
+			//创建statement
 			stmt = con.createStatement();
 			applyStatementSettings(stmt);
+			//这里调用回调函数
 			T result = action.doInStatement(stmt);
 			handleWarnings(stmt);
 			return result;
@@ -380,6 +382,8 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 		catch (SQLException ex) {
 			// Release Connection early, to avoid potential connection pool deadlock
 			// in the case when the exception translator hasn't been initialized yet.
+			/*如果捕捉到数据库异常，把数据库Connection释放，同时抛出一个经过Spring 转换过的Spring数据库异常*/
+			//Spring做了一项有意义的工作，就是把这些数据库异常统一到自己的异常体系里了
 			String sql = getSql(action);
 			JdbcUtils.closeStatement(stmt);
 			stmt = null;
@@ -389,10 +393,11 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 		}
 		finally {
 			JdbcUtils.closeStatement(stmt);
+			//释放数据库Connection
 			DataSourceUtils.releaseConnection(con, getDataSource());
 		}
 	}
-
+    //execute方法执行的是输入的SQL语句
 	@Override
 	public void execute(final String sql) throws DataAccessException {
 		if (logger.isDebugEnabled()) {
@@ -665,20 +670,23 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 
 		Assert.notNull(rse, "ResultSetExtractor must not be null");
 		logger.debug("Executing prepared SQL query");
-
+        //执行execute并设置execute的回调函数
 		return execute(psc, new PreparedStatementCallback<T>() {
 			@Override
 			@Nullable
 			public T doInPreparedStatement(PreparedStatement ps) throws SQLException {
+				//准备查询结果集
 				ResultSet rs = null;
 				try {
 					if (pss != null) {
 						pss.setValues(ps);
-					}
+					}//这里执行SQL查询
 					rs = ps.executeQuery();
+					//返回需要的记录集合
 					return rse.extractData(rs);
 				}
 				finally {
+					//最后关闭查询的记录集，数据库连接在execute()中释放
 					JdbcUtils.closeResultSet(rs);
 					if (pss instanceof ParameterDisposer) {
 						((ParameterDisposer) pss).cleanupParameters();

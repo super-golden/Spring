@@ -37,6 +37,7 @@ import org.springframework.util.Assert;
  * @since 28.11.2003
  * @see org.springframework.jdbc.core.JdbcTemplate
  */
+//该基类定义了，对DataSource数据源进行管理和配置
 public abstract class JdbcAccessor implements InitializingBean {
 
 	/** Logger available to subclasses. */

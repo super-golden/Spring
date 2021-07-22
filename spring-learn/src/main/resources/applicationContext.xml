@@ -10,4 +10,25 @@
 		<context:exclude-filter type="annotation"
 								expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
+	<!-- 1.配置数据源 -->
+	<bean id="dataSource"
+		  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<!-- 1.1.数据库驱动 -->
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+
+		<!-- 1.2.连接数据库的url -->
+		<property name="url"
+				  value="jdbc:mysql://localhost:3306/spring_jdbc?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true"/>
+		<!-- 1.3.连接数据库的用户名 -->
+		<property name="username" value="root"></property>
+		<!-- 1.4.连接数据库的密码 -->
+		<property name="password" value="ambition"></property>
+	</bean>
+
+	<!-- 2配置JDBC模板 -->
+	<bean id="jdbcTemplate"
+		  class="org.springframework.jdbc.core.JdbcTemplate">
+		<!-- 默认必须使用数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
 </beans>

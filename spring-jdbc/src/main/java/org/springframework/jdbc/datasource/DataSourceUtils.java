@@ -74,6 +74,7 @@ public abstract class DataSourceUtils {
 	 * if the attempt to get a Connection failed
 	 * @see #releaseConnection
 	 */
+	//这是取得数据库连接的调用，是通过doGetConnection完成的，这里执行了异常的转换操作
 	public static Connection getConnection(DataSource dataSource) throws CannotGetJdbcConnectionException {
 		try {
 			return doGetConnection(dataSource);
@@ -100,7 +101,8 @@ public abstract class DataSourceUtils {
 	 */
 	public static Connection doGetConnection(DataSource dataSource) throws SQLException {
 		Assert.notNull(dataSource, "No DataSource specified");
-
+        /*把对数据库的Connection放到事务管理器中进行管理，这里使用在TransactionSynchronizationManager 中的ThreadLocal变量来和线程绑定数据库连接*/
+		/*如果在TransactionSynchronizationManager中已经有了与当前线程绑定的数据库连接，那么直接取出来使用*/
 		ConnectionHolder conHolder = (ConnectionHolder) TransactionSynchronizationManager.getResource(dataSource);
 		if (conHolder != null && (conHolder.hasConnection() || conHolder.isSynchronizedWithTransaction())) {
 			conHolder.requested();
@@ -111,7 +113,8 @@ public abstract class DataSourceUtils {
 			return conHolder.getConnection();
 		}
 		// Else we either got no holder or an empty thread-bound holder here.
-
+        //这里得到需要的数据库Connection，它是通过Bean配置文件中定义好的
+		/*最后把新打开的数据库Connection通过TransactionSynchronizationManager和当前线程绑定起来*/
 		logger.debug("Fetching JDBC Connection from DataSource");
 		Connection con = fetchConnection(dataSource);
 
@@ -154,6 +157,7 @@ public abstract class DataSourceUtils {
 	 * @throws IllegalStateException if the DataSource returned a null value
 	 * @see DataSource#getConnection()
 	 */
+	//从DataSource中获取数据库Connection
 	private static Connection fetchConnection(DataSource dataSource) throws SQLException {
 		Connection con = dataSource.getConnection();
 		if (con == null) {

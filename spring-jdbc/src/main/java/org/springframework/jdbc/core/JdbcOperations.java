@@ -42,6 +42,7 @@ import org.springframework.lang.Nullable;
  * @author Juergen Hoeller
  * @see JdbcTemplate
  */
+//接口定义通过JDBC操作数据库的基本方法
 public interface JdbcOperations {
 
 	//-------------------------------------------------------------------------

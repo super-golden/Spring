@@ -59,6 +59,7 @@ import org.springframework.util.Assert;
  * @see StoredProcedure
  * @see org.springframework.jdbc.core.JdbcTemplate
  */
+//RdbmsOperation更高层次的抽象，以及更面向对象的方法来访问数据库
 public abstract class RdbmsOperation implements InitializingBean {
 
 	/** Logger available to subclasses. */

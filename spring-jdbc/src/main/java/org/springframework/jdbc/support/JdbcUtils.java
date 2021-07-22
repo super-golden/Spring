@@ -119,6 +119,7 @@ public abstract class JdbcUtils {
 	 * This is useful for typical finally blocks in manual JDBC code.
 	 * @param rs the JDBC ResultSet to close (may be {@code null})
 	 */
+	//关闭结果集
 	public static void closeResultSet(@Nullable ResultSet rs) {
 		if (rs != null) {
 			try {
