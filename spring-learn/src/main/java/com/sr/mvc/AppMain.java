@@ -1,9 +1,12 @@
 package com.sr.mvc;
 
+import com.sr.mvc.dao.UserDao;
+import com.sr.mvc.pojo.User;
 import org.apache.catalina.startup.Tomcat;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 public class AppMain {
 
@@ -30,16 +33,24 @@ public class AppMain {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 
 		//获取jdbcTemplate实例
-		JdbcTemplate jdbcTemplate = applicationContext.getBean("jdbcTemplate", JdbcTemplate.class);
-		System.out.println(jdbcTemplate);
+//		JdbcTemplate jdbcTemplate = applicationContext.getBean("jdbcTemplate", JdbcTemplate.class);
+//		System.out.println(jdbcTemplate);
+//
+//		//使用execute()方法执行SQL语句，创建用户账户管理表account
+//
+//		jdbcTemplate.execute("create table account(" +
+//				"id int primary key auto_increment," +
+//				"usrname varchar(50)," +
+//				"balance double)");
+//		System.out.println("账户表创建成功!");
+		SqlSessionFactory sqlSessionFactory =  applicationContext.getBean("sqlSessionFactory", SqlSessionFactory.class);
+		System.out.println(sqlSessionFactory);
 
-		//使用execute()方法执行SQL语句，创建用户账户管理表account
+		UserDao userDao = applicationContext.getBean("userMapper", UserDao.class);
+		User userByID = userDao.getUserByID(1);
 
-		jdbcTemplate.execute("create table account(" +
-				"id int primary key auto_increment," +
-				"usrname varchar(50)," +
-				"balance double)");
-		System.out.println("账户表创建成功!");
+		System.out.println(userByID.getName());
+
 
 
 	}

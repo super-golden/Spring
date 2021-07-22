@@ -33,6 +33,7 @@ import org.springframework.transaction.TransactionDefinition;
  * @see DefaultTransactionAttribute
  * @see RuleBasedTransactionAttribute
  */
+//TransactionAttribute这个数据对象是Spring对事务处理属性值的数据抽象，对这些属性的处理和TransactionProxyFactoryBean拦截下来的事务方法的处理结合起来的
 public interface TransactionAttribute extends TransactionDefinition {
 
 	/**

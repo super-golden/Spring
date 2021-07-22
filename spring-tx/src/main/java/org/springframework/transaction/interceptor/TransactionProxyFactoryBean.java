@@ -111,6 +111,8 @@ import org.springframework.transaction.PlatformTransactionManager;
  * @see TransactionInterceptor
  * @see org.springframework.aop.framework.ProxyFactoryBean
  */
+//在Spring事务处理中，可以通过设计一个TransactionProxyFactoryBean来使用AOP功能，通过TransactionProxyFactoryBean可以生成Proxy代理对象，在这个代理对象
+	//中，通过TransactionInterceptor来完成对代理方法的拦截，正是AOP的拦截功能。将事务的处理功能编织进来。
 @SuppressWarnings("serial")
 public class TransactionProxyFactoryBean extends AbstractSingletonProxyFactoryBean
 		implements BeanFactoryAware {

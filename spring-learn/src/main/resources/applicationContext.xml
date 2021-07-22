@@ -11,24 +11,71 @@
 								expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	<!-- 1.配置数据源 -->
-	<bean id="dataSource"
-		  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<!-- 1.1.数据库驱动 -->
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+	<!--<bean id="dataSource"-->
+	<!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+	<!--&lt;!&ndash; 1.1.数据库驱动 &ndash;&gt;-->
+	<!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
 
-		<!-- 1.2.连接数据库的url -->
-		<property name="url"
-				  value="jdbc:mysql://localhost:3306/spring_jdbc?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true"/>
-		<!-- 1.3.连接数据库的用户名 -->
-		<property name="username" value="root"></property>
-		<!-- 1.4.连接数据库的密码 -->
-		<property name="password" value="ambition"></property>
+	<!--&lt;!&ndash; 1.2.连接数据库的url &ndash;&gt;-->
+	<!--<property name="url"-->
+	<!--value="jdbc:mysql://localhost:3306/spring_jdbc?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true"/>-->
+	<!--&lt;!&ndash; 1.3.连接数据库的用户名 &ndash;&gt;-->
+	<!--<property name="username" value="root"></property>-->
+	<!--&lt;!&ndash; 1.4.连接数据库的密码 &ndash;&gt;-->
+	<!--<property name="password" value="ambition"></property>-->
+	<!--</bean>-->
+
+	<!--&lt;!&ndash; 2配置JDBC模板 &ndash;&gt;-->
+	<!--<bean id="jdbcTemplate"-->
+	<!--class="org.springframework.jdbc.core.JdbcTemplate">-->
+	<!--&lt;!&ndash; 默认必须使用数据源 &ndash;&gt;-->
+	<!--<property name="dataSource" ref="dataSource"></property>-->
+	<!--</bean>-->
+
+
+	<!--表明引用的参数配置文件是mysql-local.properties-->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>
+					config/mysql-local.properties
+				</value>
+			</list>
+		</property>
 	</bean>
 
-	<!-- 2配置JDBC模板 -->
-	<bean id="jdbcTemplate"
-		  class="org.springframework.jdbc.core.JdbcTemplate">
-		<!-- 默认必须使用数据源 -->
-		<property name="dataSource" ref="dataSource"></property>
+
+	<!--数据库连接池-->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="${jdbc.driver}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.uid}"/>
+		<property name="password" value="${jdbc.password}"/>
+		<!-- 初始连接池大小 -->
+		<property name="initialSize" value="10"/>
+		<!-- 连接池中连接最小个数 -->
+		<property name="minIdle" value="5"/>
+		<property name="maxActive" value="20"/>
 	</bean>
+
+
+	<!-- 配置SqlSessionFactory对象 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 注入数据库连接池 -->
+		<property name="dataSource" ref="dataSource"/>
+		<!--<property name="configLocation" value="config/mybatis-config.xml"/>-->
+		<property name="mapperLocations" value="classpath:mapper/*.xml"/>
+		<property name="typeAliasesPackage" value="com.sr.mvc.pojo"/>
+	</bean>
+
+	<!--<bean id="sqlsessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">-->
+	<!--<constructor-arg index="0" ref="sqlSessionFactory" />-->
+	<!--</bean>-->
+
+	<!--配置userMapper对象-->
+	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sr.mvc.dao.UserDao"/>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>
+
 </beans>
