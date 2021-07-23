@@ -190,6 +190,7 @@ public abstract class AbstractSingletonProxyFactoryBean extends ProxyConfig
 		TargetSource targetSource = createTargetSource(this.target);
 		proxyFactory.setTargetSource(targetSource);
 
+		//设置代理接口方法
 		if (this.proxyInterfaces != null) {
 			proxyFactory.setInterfaces(this.proxyInterfaces);
 		}
