@@ -222,6 +222,7 @@ public class TransactionProxyFactoryBean extends AbstractSingletonProxyFactoryBe
 	 * As of 4.2, this method adds {@link TransactionalProxy} to the set of
 	 * proxy interfaces in order to avoid re-processing of transaction metadata.
 	 */
+	//这个是实现父类的钩子函数
 	@Override
 	protected void postProcessProxyFactory(ProxyFactory proxyFactory) {
 		proxyFactory.addInterface(TransactionalProxy.class);

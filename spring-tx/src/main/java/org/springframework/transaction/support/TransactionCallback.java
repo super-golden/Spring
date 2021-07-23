@@ -34,6 +34,7 @@ import org.springframework.transaction.TransactionStatus;
  * @see CallbackPreferringPlatformTransactionManager
  * @param <T> the result type
  */
+//事务回调
 @FunctionalInterface
 public interface TransactionCallback<T> {
 

@@ -60,6 +60,7 @@ public abstract class AbstractSingletonProxyFactoryBean extends ProxyConfig
 	@Nullable
 	private transient ClassLoader proxyClassLoader;
 
+	//代理对象
 	@Nullable
 	private Object proxy;
 
@@ -226,13 +227,15 @@ public abstract class AbstractSingletonProxyFactoryBean extends ProxyConfig
 	/**
 	 * A hook for subclasses to post-processores the {@link ProxyFactory}
 	 * before creating the proxy instance with it.
+	 *子类对{@link ProxyFactory}进行后期处理的钩子
+	 *在使用它创建代理实例之前。
 	 * @param proxyFactory the AOP ProxyFactory about to be used
 	 * @since 4.2
 	 */
 	protected void postProcessProxyFactory(ProxyFactory proxyFactory) {
 	}
 
-    //返回的是一个Proxy，这个proxy是ProxyFactory生成的AOP代理，已经封装了对事务处理的拦截器配置
+    //返回的是一个Proxy，这个proxy是ProxyFactory生成的AOP代理
 	@Override
 	public Object getObject() {
 		if (this.proxy == null) {

@@ -122,8 +122,10 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 
 	private int transactionSynchronization = SYNCHRONIZATION_ALWAYS;
 
+	//默认事务超时
 	private int defaultTimeout = TransactionDefinition.TIMEOUT_DEFAULT;
 
+	//是否允许嵌套事务
 	private boolean nestedTransactionAllowed = false;
 
 	private boolean validateExistingTransaction = false;
@@ -333,7 +335,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 
 
 	//---------------------------------------------------------------------
-	// Implementation of PlatformTransactionManager
+	// Implementation of PlatformTransactionManager 实现PlatformTransactionManager
 	//---------------------------------------------------------------------
 
 	/**
@@ -348,6 +350,14 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	public final TransactionStatus getTransaction(@Nullable TransactionDefinition definition)
 			throws TransactionException {
 
+		/*关于这个
+		* {@link org.springframework.transaction.support.DefaultTransactionDefinition}
+		* 的默认事务处理属性是：
+		* private int propagationBehavior = PROPAGATION_REQUIRED;
+		  private int isolationLevel = ISOLATION_DEFAULT;
+		  private int timeout = TIMEOUT_DEFAULT;
+	      private boolean readOnly = false;
+	   */
 		// Use defaults if no transaction definition given.
 		//如果没有给出事务定义，则使用默认值。
 		TransactionDefinition def = (definition != null ? definition : TransactionDefinition.withDefaults());
@@ -372,7 +382,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 		}
 
 		// Check definition settings for new transaction.
-		//检查事务属性中timeout的设置是否合理
+		//检查事务属性中timeout的设置是否合理，这里不可设置为小于-1的值
 		if (def.getTimeout() < TransactionDefinition.TIMEOUT_DEFAULT) {
 			throw new InvalidTimeoutException("Invalid transaction timeout", def.getTimeout());
 		}
@@ -389,6 +399,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 		else if (def.getPropagationBehavior() == TransactionDefinition.PROPAGATION_REQUIRED ||
 				def.getPropagationBehavior() == TransactionDefinition.PROPAGATION_REQUIRES_NEW ||
 				def.getPropagationBehavior() == TransactionDefinition.PROPAGATION_NESTED) {
+			//由于当前无事务，所以挂起的是null
 			SuspendedResourcesHolder suspendedResources = suspend(null);
 			if (debugEnabled) {
 				logger.debug("Creating new transaction with name [" + def.getName() + "]: " + def);
@@ -403,6 +414,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 		}
 		else {
 			// Create "empty" transaction: no actual transaction, but potentially synchronization.
+			//创建“空”事务：没有实际事务，但可能是同步。
 			if (def.getIsolationLevel() != TransactionDefinition.ISOLATION_DEFAULT && logger.isWarnEnabled()) {
 				logger.warn("Custom isolation level specified but no actual transaction initiated; " +
 						"isolation level will effectively be ignored: " + def);
@@ -474,6 +486,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 				logger.debug("Suspending current transaction, creating new transaction with name [" +
 						definition.getName() + "]");
 			}
+			//挂起当前事务
 			SuspendedResourcesHolder suspendedResources = suspend(transaction);
 			try {
 				return startTransaction(definition, transaction, debugEnabled, suspendedResources);
@@ -543,6 +556,8 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	/**
 	 * Create a new TransactionStatus for the given arguments,
 	 * also initializing transaction synchronization as appropriate.
+	 *为给定参数创建新的TransactionStatus，
+	 *还可以根据需要初始化事务同步。
 	 * @see #newTransactionStatus
 	 * @see #prepareTransactionStatus
 	 */
@@ -558,6 +573,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 
 	/**
 	 * Create a TransactionStatus instance for the given arguments.
+	 * 为给定参数创建TransactionStatus实例。
 	 */
 	protected DefaultTransactionStatus newTransactionStatus(
 			TransactionDefinition definition, @Nullable Object transaction, boolean newTransaction,
@@ -576,6 +592,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 
 	/**
 	 * Initialize transaction synchronization as appropriate.
+	 * 根据需要初始化事务同步。
 	 */
 	protected void prepareSynchronization(DefaultTransactionStatus status, TransactionDefinition definition) {
 		if (status.isNewSynchronization()) {
@@ -609,6 +626,8 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	/**
 	 * Suspend the given transaction. Suspends transaction synchronization first,
 	 * then delegates to the {@code doSuspend} template method.
+	 *挂起给定的事务。先挂起事务同步，
+	 *然后委托给{@code doSuspend}模板方法。
 	 * @param transaction the current transaction object
 	 * (or {@code null} to just suspend active synchronizations, if any)
 	 * @return an object that holds suspended resources
@@ -663,6 +682,8 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	/**
 	 * Resume the given transaction. Delegates to the {@code doResume}
 	 * template method first, then resuming transaction synchronization.
+	 *恢复给定的事务。对{@code doResume}的委托
+	 *模板方法，然后恢复事务同步。
 	 * @param transaction the current transaction object
 	 * @param resourcesHolder the object that holds suspended resources,
 	 * as returned by {@code suspend} (or {@code null} to just
@@ -691,6 +712,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 
 	/**
 	 * Resume outer transaction after inner transaction begin failed.
+	 * 在内部事务开始失败后恢复外部事务。
 	 */
 	private void resumeAfterBeginException(
 			Object transaction, @Nullable SuspendedResourcesHolder suspendedResources, Throwable beginEx) {
@@ -777,6 +799,8 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	/**
 	 * Process an actual commit.
 	 * Rollback-only flags have already been checked and applied.
+	 *处理实际提交。
+	 *已检查并应用Rollback-only标志。
 	 * @param status object representing the transaction
 	 * @throws TransactionException in case of commit failure
 	 */
@@ -863,6 +887,8 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	/**
 	 * This implementation of rollback handles participating in existing
 	 * transactions. Delegates to {@code doRollback} and
+	 *回滚的这个实现处理参与现有
+	 *交易记录。委托给{@code doRollback}和
 	 * {@code doSetRollbackOnly}.
 	 * @see #doRollback
 	 * @see #doSetRollbackOnly

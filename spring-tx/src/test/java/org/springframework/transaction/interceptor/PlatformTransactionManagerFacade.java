@@ -24,13 +24,15 @@ import org.springframework.transaction.TransactionStatus;
 /**
  * Used for testing only (for example, when we must replace the
  * behavior of a PlatformTransactionManager bean we don't have access to).
- *
+ * 仅用于测试（例如，当我们必须更换
+ *我们无权访问的PlatformTransactionManager bean的行为）。
  * <p>Allows behavior of an entire class to change with static delegate change.
  * Not multi-threaded.
  *
  * @author Rod Johnson
  * @since 26.04.2003
  */
+//门面设计模式
 public class PlatformTransactionManagerFacade implements PlatformTransactionManager {
 
 	/**

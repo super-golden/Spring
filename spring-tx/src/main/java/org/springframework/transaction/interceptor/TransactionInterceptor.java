@@ -105,7 +105,12 @@ public class TransactionInterceptor extends TransactionAspectSupport implements 
 		setTransactionAttributes(attributes);
 	}
 
-
+	/**
+	 * 这个invoke方法是Proxy对象的回调方法，在调用Proxy对象的代理方法时触发这个回调
+	 * @param invocation the method invocation joinpoint
+	 * @return
+	 * @throws Throwable
+	 */
 	@Override
 	@Nullable
 	public Object invoke(MethodInvocation invocation) throws Throwable {

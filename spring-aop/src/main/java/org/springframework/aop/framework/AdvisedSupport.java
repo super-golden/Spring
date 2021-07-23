@@ -89,6 +89,8 @@ public class AdvisedSupport extends ProxyConfig implements Advised {
 	/**
 	 * Interfaces to be implemented by the proxy. Held in List to keep the order
 	 * of registration, to create JDK proxy with specified order of interfaces.
+	 * 要由代理实现的接口。按顺序排列
+	 * *注册时，创建具有指定接口顺序的JDK代理。
 	 */
 	private List<Class<?>> interfaces = new ArrayList<>();
 

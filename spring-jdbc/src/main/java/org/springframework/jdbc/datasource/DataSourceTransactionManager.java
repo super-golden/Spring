@@ -120,12 +120,15 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 	@Nullable
 	private DataSource dataSource;
 
+	//强制只读
 	private boolean enforceReadOnly = false;
 
 
 	/**
 	 * Create a new DataSourceTransactionManager instance.
 	 * A DataSource has to be set to be able to use it.
+	 *创建新的DataSourceTransactionManager实例。
+	 *必须设置数据源才能使用它。
 	 * @see #setDataSource
 	 */
 	public DataSourceTransactionManager() {
@@ -456,6 +459,8 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 	/**
 	 * DataSource transaction object, representing a ConnectionHolder.
 	 * Used as transaction object by DataSourceTransactionManager.
+	 *DataSource事务对象，表示ConnectionHolder。
+	 *用作DataSourceTransactionManager的事务对象。
 	 */
 	private static class DataSourceTransactionObject extends JdbcTransactionObjectSupport {
 
