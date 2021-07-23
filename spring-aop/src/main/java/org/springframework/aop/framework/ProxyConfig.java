@@ -155,7 +155,7 @@ public class ProxyConfig implements Serializable {
 
 
 	/**
-	 * Copy configuration from the other config object.
+	 * Copy configuration from the other config object.从其他配置对象复制配置。
 	 * @param other object to copy configuration from
 	 */
 	public void copyFrom(ProxyConfig other) {

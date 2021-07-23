@@ -98,12 +98,14 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 
 	/**
 	 * Vavr library present on the classpath?
+	 * 类路径上是否存在Vavr库？
 	 */
 	private static final boolean vavrPresent = ClassUtils.isPresent(
 			"io.vavr.control.Try", TransactionAspectSupport.class.getClassLoader());
 
 	/**
 	 * Reactive Streams API present on the classpath?
+	 * 类路径上是否存在反应流API？
 	 */
 	private static final boolean reactiveStreamsPresent =
 			ClassUtils.isPresent("org.reactivestreams.Publisher", TransactionAspectSupport.class.getClassLoader());
@@ -161,9 +163,15 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 	@Nullable
 	private final ReactiveAdapterRegistry reactiveAdapterRegistry;
 
+	/**
+	 * 事务管理器的beanName
+	 */
 	@Nullable
 	private String transactionManagerBeanName;
 
+	/**
+	 * 事务管理器
+	 */
 	@Nullable
 	private TransactionManager transactionManager;
 
@@ -282,6 +290,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 
 	/**
 	 * Return the transaction attribute source.
+	 * 返回事务属性source。
 	 */
 	@Nullable
 	public TransactionAttributeSource getTransactionAttributeSource() {
@@ -480,6 +489,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 
 	/**
 	 * Determine the specific transaction manager to use for the given transaction.
+	 * 确定要用于给定事务的特定事务管理器。
 	 */
 	@Nullable
 	protected TransactionManager determineTransactionManager(@Nullable TransactionAttribute txAttr) {

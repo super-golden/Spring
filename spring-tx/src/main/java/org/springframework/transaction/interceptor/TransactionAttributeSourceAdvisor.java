@@ -47,6 +47,7 @@ public class TransactionAttributeSourceAdvisor extends AbstractPointcutAdvisor {
 	@Nullable
 	private TransactionInterceptor transactionInterceptor;
 
+	//对于pointcut，这里定义了一个内部类TransactionAttributeSourcePointcut
 	private final TransactionAttributeSourcePointcut pointcut = new TransactionAttributeSourcePointcut() {
 		@Override
 		@Nullable
@@ -54,6 +55,7 @@ public class TransactionAttributeSourceAdvisor extends AbstractPointcutAdvisor {
 		 * 这里使用transactionInterceptor 来得到事务的配置属性，在对Proxy的方法进行匹配调用时，会使用到这些配置属性
 		 */
 		protected TransactionAttributeSource getTransactionAttributeSource() {
+			/*这里通过调用transactionInterceptor来得到事务的配置属性，在对Proxy的方法进行匹配调用时，会使用到这些配置属性*/
 			return (transactionInterceptor != null ? transactionInterceptor.getTransactionAttributeSource() : null);
 		}
 	};

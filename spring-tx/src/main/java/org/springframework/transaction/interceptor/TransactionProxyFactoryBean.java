@@ -122,6 +122,7 @@ public class TransactionProxyFactoryBean extends AbstractSingletonProxyFactoryBe
 	 */
 	private final TransactionInterceptor transactionInterceptor = new TransactionInterceptor();
 
+	//切入点
 	@Nullable
 	private Pointcut pointcut;
 

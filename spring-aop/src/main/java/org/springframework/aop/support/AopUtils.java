@@ -84,6 +84,7 @@ public abstract class AopUtils {
 
 	/**
 	 * Check whether the given object is a CGLIB proxy.
+	 * 检查给定对象是否是CGLIB代理。
 	 * <p>This method goes beyond the implementation of
 	 * {@link ClassUtils#isCglibProxy(Object)} by additionally checking if
 	 * the given object is an instance of {@link SpringProxy}.
@@ -97,6 +98,7 @@ public abstract class AopUtils {
 
 	/**
 	 * Determine the target class of the given bean instance which might be an AOP proxy.
+	 * 确定给定bean实例的目标类，该实例可能是AOP代理。
 	 * <p>Returns the target class for an AOP proxy or the plain class otherwise.
 	 * @param candidate the instance to check (might be an AOP proxy)
 	 * @return the target class (or the plain class of the given object as fallback;

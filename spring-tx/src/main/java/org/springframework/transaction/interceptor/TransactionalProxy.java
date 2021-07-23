@@ -20,7 +20,7 @@ import org.springframework.aop.SpringProxy;
 
 /**
  * A marker interface for manually created transactional proxies.
- *
+ *用于手动创建事务代理的标记接口。
  * <p>{@link TransactionAttributeSourcePointcut} will ignore such existing
  * transactional proxies during AOP auto-proxying and therefore avoid
  * re-processing transaction metadata on them.
