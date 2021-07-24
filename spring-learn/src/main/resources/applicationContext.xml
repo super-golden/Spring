@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xmlns:p="http://www.springframework.org/schema/p"
-	   xmlns:aop="http://www.springframework.org/schema/aop"
 	   xmlns:context="http://www.springframework.org/schema/context"
-	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context-4.2.xsd
-        http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx.xsd">
+        http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<tx:annotation-driven/>
 	<!-- 注册相关后置处理器,扫描包路径下的注解配置 -->
 	<context:component-scan base-package="com.sr.mvc">
 		<context:exclude-filter type="annotation"
@@ -49,9 +44,19 @@
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
-
+	<!--7 aspectj支持自动代理实现AOP功能 -->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
 	<!--表明引用的参数配置文件是mysql-local.properties-->
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+	<!--<property name="locations">-->
+	<!--<list>-->
+	<!--<value>-->
+	<!--config/mysql-local.properties-->
+	<!--</value>-->
+	<!--</list>-->
+	<!--</property>-->
+	<!--</bean>-->
+	<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>
@@ -60,7 +65,6 @@
 			</list>
 		</property>
 	</bean>
-
 
 	<!--数据库连接池-->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
@@ -95,4 +99,13 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
 	</bean>
 
+	<!--4 自动扫描对象关系映射 -->
+	<!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+		<!--&lt;!&ndash;指定会话工厂，如果当前上下文中只定义了一个则该属性可省去 &ndash;&gt;-->
+		<!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>-->
+		<!--&lt;!&ndash; 指定要自动扫描接口的基础包，实现接口 &ndash;&gt;-->
+		<!--<property name="basePackage" value="com.sr.mvc.dao"/>-->
+		<!--<property name="sqlSessionFactory" ref="sqlSessionFactory"/>-->
+		<!--<property name="markerInterface" value="com.sr.mvc.dao.BaseDao"/>-->
+	<!--</bean>-->
 </beans>
