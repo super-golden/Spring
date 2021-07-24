@@ -396,13 +396,15 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
 	public Object getResourceFactory() {
 		return obtainSessionFactory();
 	}
-
+    /*这里创建HibernateTransactionObject，这个对象也是设置Session,DataSource这些对象的地方*/
 	@Override
 	protected Object doGetTransaction() {
 		HibernateTransactionObject txObject = new HibernateTransactionObject();
+		//是否允许嵌套事务，在这里设置
 		txObject.setSavepointAllowed(isNestedTransactionAllowed());
 
 		SessionFactory sessionFactory = obtainSessionFactory();
+		//从线程中取得SessionHolder，这个SessionHolder是在事务开始时与线程绑定的。
 		SessionHolder sessionHolder =
 				(SessionHolder) TransactionSynchronizationManager.getResource(sessionFactory);
 		if (sessionHolder != null) {
@@ -424,7 +426,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
 						"Could not obtain Hibernate-managed Session for Spring-managed transaction", ex);
 			}
 		}
-
+        //在HibernateTransactionObject中设置DataSource，这个DataSource也是与线程绑定的
 		if (getDataSource() != null) {
 			ConnectionHolder conHolder = (ConnectionHolder)
 					TransactionSynchronizationManager.getResource(getDataSource());
@@ -443,6 +445,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
 
 	@Override
 	@SuppressWarnings("deprecation")
+	//Hibernate事务开始的地方
 	protected void doBegin(Object transaction, TransactionDefinition definition) {
 		HibernateTransactionObject txObject = (HibernateTransactionObject) transaction;
 
@@ -455,7 +458,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
 		}
 
 		Session session = null;
-
+		/*如果没有创建SessionHolder,那么这里创建*/
 		try {
 			if (!txObject.hasSessionHolder() || txObject.getSessionHolder().isSynchronizedWithTransaction()) {
 				Interceptor entityInterceptor = getEntityInterceptor();

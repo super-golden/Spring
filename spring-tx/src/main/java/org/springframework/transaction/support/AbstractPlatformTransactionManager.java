@@ -207,6 +207,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 
 	/**
 	 * Return whether nested transactions are allowed.
+	 * 返回是否允许嵌套事务。
 	 */
 	public final boolean isNestedTransactionAllowed() {
 		return this.nestedTransactionAllowed;
@@ -472,7 +473,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 			//挂起事务
 			Object suspendedResources = suspend(transaction);
 			boolean newSynchronization = (getTransactionSynchronization() == SYNCHRONIZATION_ALWAYS);
-			//注意这里的参数 ，transaction为null,newTransaction 为false，以为着事务方法不需要放在事务环境中执行。
+			//注意这里的参数 ，transaction为null,newTransaction 为false，意味着事务方法不需要放在事务环境中执行。
 			//同时挂起事务的信息记录也保存在TransactionStatus中，这里包括了进程ThreadLocal 对事务信息的记录
 			return prepareTransactionStatus(
 					definition, null, false, newSynchronization, debugEnabled, suspendedResources);

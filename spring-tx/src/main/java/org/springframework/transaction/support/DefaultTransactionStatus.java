@@ -104,6 +104,7 @@ public class DefaultTransactionStatus extends AbstractTransactionStatus {
 
 	/**
 	 * Return whether there is an actual transaction active.
+	 * 返回是否有活动的实际事务。
 	 */
 	public boolean hasTransaction() {
 		return (this.transaction != null);
@@ -117,6 +118,8 @@ public class DefaultTransactionStatus extends AbstractTransactionStatus {
 	/**
 	 * Return if a new transaction synchronization has been opened
 	 * for this transaction.
+	 *如果已打开新的事务同步，则返回
+	 *用于此事务。
 	 */
 	public boolean isNewSynchronization() {
 		return this.newSynchronization;

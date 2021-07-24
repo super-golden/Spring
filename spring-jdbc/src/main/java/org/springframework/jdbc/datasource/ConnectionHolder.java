@@ -121,6 +121,7 @@ public class ConnectionHolder extends ResourceHolderSupport {
 
 	/**
 	 * Return whether this holder represents an active, JDBC-managed transaction.
+	 * 返回此holder是否表示活动的、JDBC管理的事务。
 	 */
 	protected boolean isTransactionActive() {
 		return this.transactionActive;
