@@ -33,8 +33,8 @@ public interface MethodBeforeAdvice extends BeforeAdvice {
 
 	/**
 	 * Callback before a given method is invoked.
-	 * @param method the method being invoked
-	 * @param args the arguments to the method
+	 * @param method the method being invoked 目标方法的反射对象
+	 * @param args the arguments to the method  目标方法的输入参数
 	 * @param target the target of the method invocation. May be {@code null}.
 	 * @throws Throwable if this object wishes to abort the call.
 	 * Any exception thrown will be returned to the caller if it's

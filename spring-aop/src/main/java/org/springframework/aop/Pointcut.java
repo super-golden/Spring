@@ -42,6 +42,7 @@ public interface Pointcut {
 	/**
 	 * Return the MethodMatcher for this pointcut.
 	 * @return the MethodMatcher (never {@code null})
+	 * 判断是否需要对当前方法调用进行增强，或者是否需要对当前方法应用配置好的Advice通知
 	 */
 	MethodMatcher getMethodMatcher();
 
