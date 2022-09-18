@@ -2002,7 +2002,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	}
 
 	/**
-	 * 执行Aware方法
+	 * 执行Aware方法，另外一些xxxAware方法可以通过BeanPostProcess来实现调用
 	 * @param beanName
 	 * @param bean
 	 */

@@ -104,9 +104,8 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 	}
 
 	/**
-	 * 设置一些值
+	 * 调用实现xxxAware方法的setXxx方法。
 	 * @param bean
-	 *
 	 *  方便实现这些Aware接口的bean在被初始化之后，可以取得一些对应的资源
 	 */
 	private void invokeAwareInterfaces(Object bean) {
