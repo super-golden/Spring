@@ -1,5 +1,6 @@
-package com.sr.testImport;
+package com.sr.testImport.config;
 
+import com.sr.testImport.beans.Cat;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanNameGenerator;
 import org.springframework.beans.factory.support.RootBeanDefinition;
