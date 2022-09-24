@@ -15,6 +15,7 @@ public @interface GuavaCache {
 	 */
 	String group() default "";
 
+	int expire();
 	/**
 	 * 缓存key
 	 * @return

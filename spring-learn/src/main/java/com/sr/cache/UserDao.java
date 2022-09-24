@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserDao {
 
-	@GuavaCache(spelKey = "#name")
+	@GuavaCache(group = "user", spelKey = "#name",expire = 1)
 	public String getUserName(String name) {
 
 		System.out.println("==========走数据库=============");
